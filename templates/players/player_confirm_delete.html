@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+削除確認
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+            <h2>削除確認</h2>
+        </div>
+
+        <div class="card-body">
+
+            <p>「{{ object.name }}」を削除しますか？</p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    削除する
+                </button>
+
+                <a href="{% url 'players:detail' object.pk %}" class="btn btn-secondary">
+                    キャンセル
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

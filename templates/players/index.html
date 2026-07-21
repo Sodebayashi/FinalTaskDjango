@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <h1>ゲーム一覧</h1>
+    <div class="card mt-3">
+        <div class="card-body">
+            {% for game in games %}
+            <a href="{% url 'players:game_detail' game.pk %}">
+                <p>{{ game.gamename }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+
+            <h3>プレイヤーを削除しますか？</h3>
+
+            <p>{{ object.name }}</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    削除する
+                </button>
+
+                <a href="{% url 'players:detail' object.pk %}"
+                   class="btn btn-secondary">
+                    キャンセル
+                </a>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

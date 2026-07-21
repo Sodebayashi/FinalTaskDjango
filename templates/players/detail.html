@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}
+{{ player.name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h2>{{ player.name }}</h2>
+        </div>
+
+        <div class="card-body">
+
+            <table class="table">
+
+                <tr>
+                    <th width="25%">ゲーム</th>
+                    <td>{{ player.game.gamename }}</td>
+                </tr>
+
+                <tr>
+                    <th>チーム</th>
+                    <td>{{ player.team }}</td>
+                </tr>
+
+                <tr>
+                    <th>国</th>
+                    <td>{{ player.country }}</td>
+                </tr>
+
+                <tr>
+                    <th>プロフィール</th>
+                    <td>{{ player.profile|linebreaks }}</td>
+                </tr>
+
+                <tr>
+                    <th>実績</th>
+                    <td>{{ player.achievement|linebreaks }}</td>
+                </tr>
+
+                <tr>
+                    <th>投稿者</th>
+                    <td>{{ player.author.username }}</td>
+                </tr>
+
+            </table>
+
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                戻る
+            </a>
+
+            {% if request.user == player.author %}
+            <a href="{% url 'players:delete' player.pk %}"
+            class="btn btn-danger">
+                削除
+            </a>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

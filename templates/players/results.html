@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<form action="{% url 'players:search' game.pk %}" method="get" class="mb-3">
+    {{ searchform }}
+    <button type="submit" class="btn btn-primary mt-2">検索</button>
+</form>
+  <h1 class="mt-5">検索結果：</h1>
+  {% if players %}
+    {% for player in players %}
+      <div class="card bg-light shadow-sm mt-3">
+	        <div class="card-body">
+            <p><a href="{% url 'players:detail' player.id %}">
+              <p>{{ player.name }}:{{ player.team }}:{{ player.country }}</p>  
+            </a></p>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>"{{ searchform.words.value }}"に一致する選手はい選手はいません。</p>
+  {% endif %}
+{% endblock %}

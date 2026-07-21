@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block content %}
+        <form action="{% url 'players:search' game.pk %}" method="get">
+            {{ searchform }}
+            <button type="submit">検索</button>
+        </form>
+<h1>{{ game.gamename }}の選手一覧</h1>
+{% for player in game.players.all %}
+<a href="{% url "players:detail" player.pk %}">
+    <div class="card bg-light shadow-sm mt-3">
+        <div class="card-body">
+            <p class="card-text">選手名：{{ player.name }}</p>
+            <p class="card-text">所属チーム：{{ player.team }}</p>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% if user.is_authenticated %}
+<div class="mt-3">
+<a href="{% url 'players:create' game.pk %}" class="btn btn-primary">
+    選手を追加
+</a>
+</div>
+{% endif %}
+{% endblock content %}
