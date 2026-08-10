@@ -27,7 +27,7 @@ class GameDetailView(generic.DetailView):
 
 class CreateView(generic.CreateView):
     model = Player
-    fields = ['name', 'team', 'country', 'profile', 'achievement']
+    fields = ['name', 'team', 'country', 'profile', 'achievement','image',]
     template_name = 'players/create.html'
 
     def get_context_data(self, **kwargs):
@@ -70,6 +70,25 @@ class PlayerDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Player
     template_name = "players/player_confirm_delete.html"
     success_url = reverse_lazy("players:index")
+
+    def test_func(self):
+        return self.request.user == self.get_object().author
+
+class UpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = Player
+    fields = ['name', 'team', 'country', 'profile', 'achievement', 'image']
+    template_name = 'players/create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["game"] = self.object.game
+        return context
+
+    def get_success_url(self):
+        return reverse(
+            'players:detail',
+            kwargs={'pk': self.object.pk}
+        )
 
     def test_func(self):
         return self.request.user == self.get_object().author

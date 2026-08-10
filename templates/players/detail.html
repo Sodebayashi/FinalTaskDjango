@@ -17,12 +17,22 @@
 
         <div class="card-body">
 
+        {% if player.image %}
+            <div class="text-center mb-4">
+                <img src="{{ player.image.url }}"
+                    alt="{{ player.name }}"
+                    class="img-fluid rounded shadow"
+                    style="max-height: 300px;">
+            </div>
+        {% endif %}
+
             <table class="table">
 
                 <tr>
                     <th width="25%">ゲーム</th>
                     <td>{{ player.game.gamename }}</td>
                 </tr>
+                
 
                 <tr>
                     <th>チーム</th>
@@ -51,9 +61,16 @@
 
             </table>
 
-            <a href="javascript:history.back()" class="btn btn-secondary">
-                戻る
+            <a href={% url "players:game_detail" player.game.pk %} class="btn btn-secondary">
+                選手一覧に戻る
             </a>
+
+            {% if request.user == player.author %}
+            <a href="{% url 'players:update' player.pk %}"
+            class="btn btn-primary">
+                編集
+            </a>
+            {% endif %}
 
             {% if request.user == player.author %}
             <a href="{% url 'players:delete' player.pk %}"
